@@ -59,6 +59,8 @@ pnpm-debug.log*
 # Build output
 dydz-frontend/dist/
 dydz-frontend/.vite/
+# 前端构建后输出到后端的静态文件
+dydz-backend/src/main/resources/static/
 
 # Env files
 .env
