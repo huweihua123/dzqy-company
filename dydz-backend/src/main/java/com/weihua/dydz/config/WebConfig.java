@@ -1,12 +1,7 @@
 package com.weihua.dydz.config;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -20,25 +15,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedHeaders("*");
     }
 
-    /**
-     * 托管前端静态文件（vite build 产物输出到 resources/static）
+    /*
+     * 注意：SPA fallback 拦截器仅在打包部署（前后端合并为单 JAR）时才需要添加。
+     * 开发阶段前端独立运行（Vite dev server），后端只做 API，不需要静态托管。
      */
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:/static/");
-    }
 
-    /**
-     * SPA fallback：非 /api 开头的请求且不是静态资源，统一转发到 index.html
-     * 保证前端 React Router 刷新页面不会 404
-     */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new HandlerInterceptor() {
-            @Override
-            public boolean preHandle(HttpServletRequest request,
-                    HttpServletResponse response,
                     Object handler) throws Exception {
                 String path = request.getRequestURI();
                 // API 请求、静态资源直接放行
