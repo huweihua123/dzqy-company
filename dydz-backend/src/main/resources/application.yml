@@ -1,0 +1,22 @@
+server:
+  port: 10001
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dydz
+    username: postgres
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+logging:
+  level:
+    org.hibernate.SQL: info
